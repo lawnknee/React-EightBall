@@ -1,9 +1,27 @@
 import React, { useState } from "react";
 import { getRandom } from "./random";
+import "./EightBall.css";
 
+/** Eightball => generates and shows a random answer on each click.
+ * 
+ *  Props:
+ *      answers: [ { msg, color} ... ]
+ * 
+ *  - msg to display
+ *  - color is used for background color
+ * 
+ *  App -> Eightball
+ */
 function EightBall(props) {
     const [color, setColor] = useState("black");
     const [message, setMessage] = useState("Think of a Question");
+    // one piece of state (answer) object with key of color and message
+    // update one piece of state based on new color and new message
+    // access using answer.color, answer.message
+    const reset = () => {
+        setColor("black")
+        setMessage("Think of a Question")
+    }
 
     function handleClick() {
         const idx = getRandom(props.answers);
@@ -11,12 +29,15 @@ function EightBall(props) {
         setMessage(props.answers[idx].msg);
     }
 
-    //let backgroundColor = `backgroundColor: ${color}`
-
     return (
-        <div className="EightBall" style={{backgroundColor: color, height: "200px", width: "200px", borderRadius: "100px" }} onClick={handleClick}>
-            <b>{message}</b>
+        <div className="Eightball">
+            <div className="EightBall-ball" style={{backgroundColor: color}} onClick={handleClick}>
+                <b>{message}</b>
+            </div>
+            <button className="EightBall-reset" onClick={reset}>Reset!</button>
         </div>
+        
+        
     )
 }
 
